@@ -1,0 +1,60 @@
+<mxfile host="65bd71144e">
+    <diagram id="KEnFFrUWX94KzMU6nRt5" name="Page-1">
+        <mxGraphModel dx="849" dy="496" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="shape=datastore;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="270" y="295" width="100" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="MongoDB" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="345" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;" parent="1" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="390" y="290" as="sourcePoint"/>
+                        <mxPoint x="450" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;" parent="1" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="320" y="290" as="sourcePoint"/>
+                        <mxPoint x="320" y="220" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="320" y="260"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;" parent="1" edge="1">
+                    <mxGeometry width="100" height="100" relative="1" as="geometry">
+                        <mxPoint x="250" y="290" as="sourcePoint"/>
+                        <mxPoint x="170" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="GET, PUSH, PUT and DELETE neeeded for all routes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="100" y="400" width="440" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="User" style="swimlane;" vertex="1" parent="1">
+                    <mxGeometry x="20" y="10" width="150" height="200" as="geometry">
+                        <mxRectangle x="20" y="10" width="60" height="23" as="alternateBounds"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="23" value="name: text&#10;&#9;email: text&#10;&#9;password: text&#10;&#9;avatar: text&#10;&#9;itemsWon: []&#10;&#9;isAdmin: Boo" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="22">
+                    <mxGeometry x="20" y="30" width="100" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="Auction" style="swimlane;" vertex="1" parent="1">
+                    <mxGeometry x="245" y="10" width="150" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="title: text&#9;&#10;&#9;startdate: date&#10;&#9;enddate: date&#10;&#9;items: []" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="25">
+                    <mxGeometry x="20" y="40" width="120" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Item" style="swimlane;" vertex="1" parent="1">
+                    <mxGeometry x="460" y="10" width="190" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="name: text&#10;&#9;description: text&#10;&#9;retail: Num&#10;&#9;startbid: Num&#10;&#9;image: text&#10;&#9;link: text&#10;&#9;bids:[]&#10;&#9;sold: Boo" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="27">
+                    <mxGeometry x="20" y="40" width="120" height="150" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
