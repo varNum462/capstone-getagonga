@@ -4,7 +4,11 @@ import AuthContext from "../../context/AuthContext";
 
 const HomePage = () => {
   const { user } = useContext(AuthContext);
-  return <h1 className="container">Auction Here</h1>;
+  return( 
+    <div className="container">
+      <h1 >Auction Here</h1>
+    </div>
+  );
 };
 
 export default HomePage;
