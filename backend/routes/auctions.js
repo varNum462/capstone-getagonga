@@ -111,6 +111,26 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Get one auction
+router.get("/:auctionId", async (req, res) => {
+  try {
+    const auction = await Auction.findById(req.params.auctionId);
+    return res.send(auction);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+//GET an auction's items
+router.get("/:auctionId/items", async (req, res) => {
+  try {
+    const auction = await Auction.findById(req.params.auctionId);
+    return res.send(auction);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
 //DELETE a single auction from the database
 router.delete("/:auctionId", async (req, res) => {
   try {

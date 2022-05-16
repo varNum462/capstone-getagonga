@@ -10,6 +10,7 @@ const bidSchema = mongoose.Schema({
 const itemSchema = mongoose.Schema({
   itemName: { type: String, required: true, minLength: 5, maxLength: 100 },
   description: { type: String, minLength: 2, maxLength: 255 },
+  category: {type: String, minLength: 5, maxLength: 255 },
   retailPrice: { type: Number },
   startBid: { type: Number },
   image: { type: String, minLength: 5, maxLength: 255},
