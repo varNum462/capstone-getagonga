@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Items = () => {
+
+const Items = (props) => {
     const [itemList, setItemList] = useState([]);
     const getItems = async () => {
         try {
-            let items = await axios.get (`http://localhost:3008/api/auctions/`)
+            let items = await axios.get (`http://localhost:3008/api/auctions`)
             setItemList(items.data.items);
         } catch (err) {
           console.log(err);
         }
       };
   return (
-    <div className="container itemAdmin">
+    <div className="container itemAdmin" id="itemAdmin">
         <div className="p-2 mt-3 text-center w-100">
             <h3 className="mt-0">Items List</h3>   
             <table className="table">
