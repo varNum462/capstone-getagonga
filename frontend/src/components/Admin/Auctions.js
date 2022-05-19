@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+//import { useNavigate } from "react-router-dom";
 import { parseISO } from 'date-fns';
 
 const UsFormatter = new Intl.DateTimeFormat('en-US')
-const Auctions = () => {
+
+const Auctions = (props) => {   
     const [auctionList, setAuctionList] = useState([]);
     const getAuctions = async () => {
         try {
@@ -35,10 +37,8 @@ const Auctions = () => {
     getAuctions();
     }
 
-    async function handleDelete(event) {
-        event.preventDefault();
-        let auctionId = document.getElementById('deleteAuction').value;
-        await axios.delete(`http://localhost:3008/api/auctions/${auctionId}`);
+    async function handleDelete(aucId) {       
+        await axios.delete(`http://localhost:3008/api/auctions/${aucId}`);
         getAuctions();
     }
 
@@ -50,7 +50,6 @@ const Auctions = () => {
             "startDate": newStartDate,
             "endDate": newEndDate,
         });
-
         getAuctions();
     }
 
@@ -60,8 +59,8 @@ const Auctions = () => {
     
     function toggleEdit(auctionIndex, action){
         let form = "form"+auctionIndex;
-        let auction = "auction"+auctionIndex;
-        if (action == 'edit'){
+        //let auction = "auction"+auctionIndex;
+        if (action === 'edit'){
             document.getElementById(form).className = "form-inline d-flex mt-2";
         }else{            
             document.getElementById(form).className = "d-none";
@@ -147,25 +146,21 @@ const Auctions = () => {
                         </form>
                         </td> 
                         <td>
-                            <div className="m-2 w-100">
-                                <form onSubmit = "">
-                                    <input type="hidden" name="manageItems" id="manageItems" value={auction._id} />                              
-                                    <input type="button" className="w-100 btn btn-primary" value="Manage Items" src="" alt="Manage Items" onClick = "" />
-                                </form>
+                            <div className="m-2 w-100">  
+                                <button className="w-100 btn btn-primary" alt="Manage Items" onClick={() => props.ItemFinder(auction._id,auction.title)}>
+                                    Manage Items
+                                </button>                               
                             </div>
                         </td> 
                         <td>
                             <div className="m-2 w-100">
-                                <form className="form-horizontal" onSubmit = {handleDelete}> 
-                                    <input type="hidden" name="deleteAuction" id="deleteAuction" value={auction._id} />           
-                                    <input type="submit" className="w-100 btn btn-danger" value="DELETE" alt="Delete Auction" />
-                                </form>
+                                <button className="w-100 btn btn-danger" onClick={(event) => handleDelete(auction._id)}>Delete</button>
                             </div>
                         </td>
                     </tr> 
                     )
-                })        
-                }   
+                })       
+                };   
                 </tbody>
             </table>   
         </div>

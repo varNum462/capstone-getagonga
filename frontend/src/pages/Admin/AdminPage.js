@@ -1,27 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 //import AuthContext from "../../context/AuthContext";
 //import { Link } from "react-router-dom";
+import axios from "axios";
 import "./AdminPage.css";
 import Auctions from "../../components/Admin/Auctions";
 import Items from "../../components/Admin/Items";
 
 const AdminPage = () => {  
 
-    function toggleItems(action){
-        if (action == 'Items'){
-            document.getElementById("auctionAdmin").className = "d-none";
-            document.getElementById("itemAdmin").className = "container itemAdmin";
-        }else{            
-            document.getElementById("auctionAdmin").className = "container auctionAdmin";
-            document.getElementById("itemAdmin").className = "d-none";
+    const [itemsToggle,setItemsToggle] = useState(false);
+    const [auctionsToggle,setAuctionsToggle] = useState(true);
+    const [auctionId,setAuctionId] = useState();
+    const [auctionName,setAuctionName] = useState();
+    const [itemList, setItemList] = useState([]);
+   
+    async function ItemFinder(aucId,aucName){
+        console.log(aucId);
+        setItemsToggle(true);
+        setAuctionsToggle(false);
+        setAuctionId(aucId);
+        setAuctionName(aucName);
+        try {
+            let items = await axios.get (`http://localhost:3008/api/auctions/${aucId}`)
+            setItemList(items.data.items);
+        } catch (err) {
+          console.log(err);
         }
     }
-    
+
   return (
     <div className="container">
         <h2>Admin Console</h2>  
-        <Auctions />  
-        <Items />      
+          
+        {
+            auctionsToggle && <Auctions ItemFinder={ ItemFinder } />}
+        {
+            itemsToggle && <Items itemList={ itemList } aucId = {auctionId} aucName = {auctionName} />      
+        }
+        
     </div>
   );
 };
