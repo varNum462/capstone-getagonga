@@ -5,22 +5,43 @@ import ItemSearch from "./ItemSearch";
 
 const Items = (props) => {
     const [searchTerm, setSearch] = useState([]); 
-    const itemList = props.itemList;     
-    console.log(`Item List ${itemList}`);  
     const [itemArray, setItemArray] = useState([]);
 
     const newItem = async () => {
         let newItemSearch = await axios.get(`https://serpapi.com/search?q=${searchTerm}&engine=google&gl=us&filter=0&num=5&api_key=16181e421d1e24adaa222ebaa1144735b56e2dda0a719e456e3bd1571109dd2f`)
         setItemArray(newItemSearch.data.shopping_results);
-        console.log(itemArray[0]);
         }
-    async function addItem(){
-
-    };
-
-    async function handleDelete(itemId) {
-        await axios.delete(`http://localhost:3008/api/auctions/${props.aucId}/items/${itemId}`);        
-    }
+    
+        const [title, setTitle] = useState("no-title")
+        const [image, setImage] = useState("no-image")
+        const [price, setPrice] = useState(0.00)
+        const [startBid, setStartBid] = useState(0.00)
+        const [link, setLink] = useState("no-link")
+        const [category, setCategory] = useState("no-category")
+        
+        async function addItem (event) {
+        event.preventDefault();       
+        setTitle(event.target.title.value);       
+        setImage(event.target.image.value);
+        setPrice(event.target.retailPrice.value);
+        setStartBid(event.target.startBid.value);
+        setLink(event.target.link.value);
+        setCategory(event.target.category.value);
+        //console.log(`title ${title} - price ${price} - ${startBid} - ${link} - ${category} `);
+        
+        let newAuctionItem = await axios.put(`http://localhost:3008/api/auctions/${props.aucId}/items`, { 
+            "itemName": title,
+            "image": image,
+            "retailPrice": price,
+            "startBid": startBid,
+            "link": link,
+            "category": category,
+        })        
+        }
+    
+    //async function handleDelete(itemId) {
+    //    await axios.delete(`http://localhost:3008/api/auctions/${props.aucId}/items/${itemId}`);        
+    //}
 
     useEffect(() => {
         newItem(); 
@@ -36,8 +57,9 @@ const Items = (props) => {
             </div> 
             <h4>Search Results</h4>
             <div className="d-flex justify-content-between">
-            {itemArray.slice(0, 5).map((item,index) => {
-                let firstBid = parseFloat(Math.round((item.extracted_price / 3) / 5) * 5).toFixed(2);               
+            {itemArray.map((item,index) => {
+                if(index < 5){
+                let firstBid = parseFloat(Math.round((item.extracted_price / 3) / 5) * 5).toFixed(2);  
                 return (    
                     <div className="w-25 m-3 text-start card" key={index}> 
                         <div className="d-flex align-items-stretch card-header">
@@ -53,14 +75,14 @@ const Items = (props) => {
                             <div className="text-center"><a href={item.link} target="_blank" rel="noreferrer">Link to Item</a></div> 
                         </div>
                         <div className="text-center card-footer">
-                            <form onSubmit={addItem}>
+                            <form onSubmit = {(event) => addItem (event)}>
                                 <input type="hidden" name="image" id="image" value={item.thumbnail} />
                                 <input type="hidden" name="title" id="title" value={item.title} />
                                 <input type="hidden" name="retailPrice" id="retailPrice" value={item.price} />
                                 <input type="hidden" name="startBid" id="startBid" value={firstBid} />
                                 <input type="hidden" name="link" id="link" value={item.link} />
-                                <select class="custom-select custom-select-sm" name="category" id="category">
-                                    <option selected>Choose a category</option>
+                                <select className="custom-select custom-select-sm w-75 mb-2" name="category" id="category">
+                                    <option>Choose category</option>
                                     <option value="household">Household</option>
                                     <option value="fashion">Fashion</option>
                                     <option value="health">Health</option>
@@ -76,6 +98,9 @@ const Items = (props) => {
                         </div>                                               
                     </div> 
                     )
+                }else{
+                    return false;
+                }
                 })        
                 }
             </div>

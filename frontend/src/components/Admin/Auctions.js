@@ -128,22 +128,24 @@ const Auctions = (props) => {
                                     <input type="button" className="w-100 btn btn-warning" value="Edit" src="" alt="Edit Items" onClick = {(event) => toggleEdit(index, 'edit')}/> 
                                 </div>                               
                             </div>
-                        <form className="form-inline d-none" id={`form${index}`} onSubmit = {e => handleEdit(e, auction._id)}>
-                            <div className="row">
-                                <div className="col-6">
-                                    <input className="form-control" type="text" name="title" id="title" defaultValue={auction.title} onChange = {(event) => setNewAuctionTitle(event.target.value)} />
-                                </div>
-                                <div className="col-2">
-                                    <input className="form-control" type="text" name="startDate" id="startDate" defaultValue={UsFormatter.format(parseISO(auction.startDate),'dd/mm/yyyy')} onChange = {(event) => setNewStartDate(event.target.value)} />
-                                </div>
-                                <div className="col-2">
-                                    <input className="form-control" type="text" name="endDate" id="endDate" defaultValue={UsFormatter.format(parseISO(auction.endDate), 'dd/mm/yyyy')} onChange = {(event) => setNewEndDate(event.target.value)} />
-                                </div>
-                                <div className="col-2">
-                                    <input type="submit" className="btn btn-success w-100" value="Save" onClick = {(event) => toggleEdit(index, 'save')} />
-                                </div>
+                            <div>
+                                <form className="form-inline d-none" id={`form${index}`} onSubmit = {e => handleEdit(e, auction._id)}>
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <input className="form-control" type="text" name="title" id="title" defaultValue={auction.title} onChange = {(event) => setNewAuctionTitle(event.target.value)} />
+                                        </div>
+                                        <div className="col-2">
+                                            <input className="form-control" type="text" name="startDate" id="startDate" defaultValue={UsFormatter.format(parseISO(auction.startDate),'dd/mm/yyyy')} onChange = {(event) => setNewStartDate(event.target.value)} />
+                                        </div>
+                                        <div className="col-2">
+                                            <input className="form-control" type="text" name="endDate" id="endDate" defaultValue={UsFormatter.format(parseISO(auction.endDate), 'dd/mm/yyyy')} onChange = {(event) => setNewEndDate(event.target.value)} />
+                                        </div>
+                                        <div className="col-2">
+                                            <input type="submit" className="btn btn-success w-100" value="Save" onClick = {(event) => toggleEdit(index, 'save')} />
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
                         </td> 
                         <td>
                             <div className="m-2 w-100">  

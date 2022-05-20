@@ -10,9 +10,9 @@ const ItemSearch = (props) => {
     return ( 
         <div className="w-100">
             <form id="searchbar" onSubmit = {(event) => handleSubmit (event)}>
-                <div class="input-group input-group-lg mt-2 mb-3 w-100">
-                    <input type="text" class="form-control w-100" placeholder="Search" name="Search" id="search"/> 
-                    <button class="btn btn-success" type="submit" >Search</button>
+                <div className="input-group input-group-lg mt-2 mb-3 w-100">
+                    <input type="text" className="form-control w-100" placeholder="Search" name="Search" id="search"/> 
+                    <button className="btn btn-success" type="submit" >Search</button>
                 </div>
             </form>
         </div>

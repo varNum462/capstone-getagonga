@@ -8,21 +8,20 @@ const bidSchema = mongoose.Schema({
 });
 
 const itemSchema = mongoose.Schema({
-  itemName: { type: String, required: true, minLength: 5, maxLength: 100 },
+  itemName: { type: String, minLength: 0, maxLength: 255 },
   description: { type: String, minLength: 2, maxLength: 255 },
   category: {type: String, minLength: 5, maxLength: 255 },
   retailPrice: { type: Number },
   startBid: { type: Number },
   image: { type: String, minLength: 5, maxLength: 255},
-  link: {type: String, minLength:10, maxlength:255},
+  link: {type: String, minLength:5, maxlength:255},
   bids: [{type:bidSchema}],  
   sold: { type: Boolean, default: false },       
 });
 
 const validateItem = (item) => {
 const schema = Joi.object({
-  itemName: Joi.string().min(5).max(50).required(), 
-  sold:  Joi.bool().required()    
+  itemName: Joi.string().min0(0).max(50) 
 });
 return schema.validate(item);
 };
