@@ -14,8 +14,7 @@ const AdminPage = () => {
     const [auctionName,setAuctionName] = useState();
     const [itemList, setItemList] = useState([]);
    
-    async function ItemFinder(aucId,aucName){
-        console.log(aucId);
+    async function ItemFinder(aucId,aucName){        
         setItemsToggle(true);
         setAuctionsToggle(false);
         setAuctionId(aucId);

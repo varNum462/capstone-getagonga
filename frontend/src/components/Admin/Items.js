@@ -5,37 +5,50 @@ import ItemSearch from "./ItemSearch";
 
 const Items = (props) => {
     const [searchTerm, setSearch] = useState([]); 
-    const [itemArray, setItemArray] = useState([]);
+    const [itemArray, setItemArray] = useState([{}]);
+    const [noResults,setNoResults] = useState();
 
     const newItem = async () => {
-        let newItemSearch = await axios.get(`https://serpapi.com/search?q=${searchTerm}&engine=google&gl=us&filter=0&num=5&api_key=16181e421d1e24adaa222ebaa1144735b56e2dda0a719e456e3bd1571109dd2f`)
+        console.log(searchTerm);
+        let newItemSearch = await axios.get(`https://serpapi.com/search?q=${searchTerm}&engine=google&gl=us&api_key=16181e421d1e24adaa222ebaa1144735b56e2dda0a719e456e3bd1571109dd2f`)
+        if(newItemSearch.data.shopping_results !== null){
         setItemArray(newItemSearch.data.shopping_results);
+            } else {
+        setNoResults("No Results");    
+            }
+        console.log(newItemSearch.data.shopping_results);
         }
     
-        const [title, setTitle] = useState("no-title")
-        const [image, setImage] = useState("no-image")
-        const [price, setPrice] = useState(0.00)
-        const [startBid, setStartBid] = useState(0.00)
-        const [link, setLink] = useState("no-link")
-        const [category, setCategory] = useState("no-category")
+        //const [title, setTitle] = useState("no-title")
+        //const [image, setImage] = useState("no-image")
+        //const [price, setPrice] = useState(0.00)
+        //const [startBid, setStartBid] = useState(0.00)
+        //const [link, setLink] = useState("no-link")
+        //const [category, setCategory] = useState("no-category")
         
-        async function addItem (event) {
+        function addItem (event) {
         event.preventDefault();       
-        setTitle(event.target.title.value);       
-        setImage(event.target.image.value);
-        setPrice(event.target.retailPrice.value);
-        setStartBid(event.target.startBid.value);
-        setLink(event.target.link.value);
-        setCategory(event.target.category.value);
+        //setTitle(event.target.title.value);    
+            console.log(`title ${ event.target.title.value }`);   
+        //setImage(event.target.image.value);
+            console.log(`image ${event.target.image.value}`);
+        //setPrice(event.target.retailPrice.value);
+            console.log(`price ${event.target.retailPrice.value}`);
+        //setStartBid(event.target.startBid.value);
+            console.log(`start bid ${event.target.startBid.value}`);
+       // setLink(event.target.link.value);
+            console.log(`link ${event.target.link.value}`);
+       // setCategory(event.target.category.value);
+            console.log(`category ${event.target.category.value}`);
         //console.log(`title ${title} - price ${price} - ${startBid} - ${link} - ${category} `);
         
-        let newAuctionItem = await axios.put(`http://localhost:3008/api/auctions/${props.aucId}/items`, { 
-            "itemName": title,
-            "image": image,
-            "retailPrice": price,
-            "startBid": startBid,
-            "link": link,
-            "category": category,
+        let newAuctionItem = axios.put(`http://localhost:3008/api/auctions/${props.aucId}/items`, { 
+            "itemName": event.target.title.value,
+            "image": event.target.image.value,
+            "retailPrice": event.target.retail.value,
+            "startBid": event.target.startBid.value,
+            "link": event.target.link.value,
+            "category": event.target.category.value,
         })        
         }
     
@@ -57,7 +70,7 @@ const Items = (props) => {
             </div> 
             <h4>Search Results</h4>
             <div className="d-flex justify-content-between">
-            {itemArray.map((item,index) => {
+            {itemArray && itemArray.map((item,index) => {
                 if(index < 5){
                 let firstBid = parseFloat(Math.round((item.extracted_price / 3) / 5) * 5).toFixed(2);  
                 return (    
@@ -78,7 +91,7 @@ const Items = (props) => {
                             <form onSubmit = {(event) => addItem (event)}>
                                 <input type="hidden" name="image" id="image" value={item.thumbnail} />
                                 <input type="hidden" name="title" id="title" value={item.title} />
-                                <input type="hidden" name="retailPrice" id="retailPrice" value={item.price} />
+                                <input type="hidden" name="retail" id="retail" value={item.price} />
                                 <input type="hidden" name="startBid" id="startBid" value={firstBid} />
                                 <input type="hidden" name="link" id="link" value={item.link} />
                                 <select className="custom-select custom-select-sm w-75 mb-2" name="category" id="category">
@@ -98,11 +111,14 @@ const Items = (props) => {
                         </div>                                               
                     </div> 
                     )
-                }else{
-                    return false;
+                }else{                   
+                    return false;                    
                 }
                 })        
                 }
+            </div>
+            <div>
+                <h2>{noResults}</h2>
             </div>
             <h4 className="text-start mt-4">Item List</h4>
             <table className="table">

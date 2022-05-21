@@ -58,7 +58,7 @@ router.put("/:auctionId/items", async (req, res) => {
 router.put("/:auctionId/items/:itemId/bids", async (req, res) => {
   try {       
       let auction = await Auction.findById(req.params.auctionId);
-      let item = await auction.Item.findById(req.params.itemId);
+      let item = await auction.items.id(req.params.itemId);
       
       if (!auction) return res.
           status(400)
@@ -68,15 +68,27 @@ router.put("/:auctionId/items/:itemId/bids", async (req, res) => {
       status(400)
       .send(`Item does not exist!`)
       
-      let newBid = await new Bid(req.body);
+      let newBid = await new Bid({bidAmt:req.body.bidAmt,bidderId:req.body.bidderId});
       
-      auction.items.bids.push(newBid);
+      item.bids.push(newBid);
       auction.save();
       
       return res.status(200).send(auction);        
   } catch (error) {
       return res.status(500).send(`Internal Server Error: ${error}`);
   }
+});
+
+router.get("/:auctionId/items/:itemId/bids", async (req, res) => {
+  try {       
+    const auction = await Auction.findById(req.params.auctionId);
+    const item = await auction.items.id(req.params.itemId);
+    const bids = await item.bids;
+    
+    return res.send(bids);       
+} catch (error) {
+    return res.status(500).send(`Internal Server Error: ${error}`);
+}
 });
 
 //* PUT Edit auction

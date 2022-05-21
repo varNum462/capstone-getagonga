@@ -18,7 +18,7 @@ const Navbar = () => {
       <ul>
         <li className="brand">
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-            <b>GetAGonga Auctions - </b>
+            <b>GetAGonga Auctions</b>
           </Link>
         </li>
         <li className="w-50 text-end">

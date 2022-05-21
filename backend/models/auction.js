@@ -11,7 +11,7 @@ const itemSchema = mongoose.Schema({
   itemName: { type: String, minLength: 0, maxLength: 255 },
   description: { type: String, minLength: 2, maxLength: 255 },
   category: {type: String, minLength: 5, maxLength: 255 },
-  retailPrice: { type: Number },
+  retailPrice: { type: String, minLength: 2, maxlength: 20 },
   startBid: { type: Number },
   image: { type: String, minLength: 5, maxLength: 255},
   link: {type: String, minLength:5, maxlength:255},
