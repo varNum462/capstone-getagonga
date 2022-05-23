@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-//import { useNavigate } from "react-router-dom";
 import { parseISO } from "date-fns";
 const UsFormatter = new Intl.DateTimeFormat("en-US")
 
@@ -28,8 +27,7 @@ const Auctions = (props) => {
         "title": auctionTitle,
         "startDate": startDate,
         "endDate": endDate,
-    })
-    console.log(newAuction);
+    })   
     setAuctionTitle("");
     setStartDate("");
     setEndDate("");
@@ -57,8 +55,7 @@ const Auctions = (props) => {
     }, []);   
     
     function toggleEdit(auctionIndex, action){
-        let form = "form"+auctionIndex;
-        //let auction = "auction"+auctionIndex;
+        let form = "form"+auctionIndex;       
         if (action === 'edit'){
             document.getElementById(form).className = "form-inline d-flex mt-2";
         }else{            
@@ -69,9 +66,7 @@ const Auctions = (props) => {
   return (
     <div className="container auctionAdmin mb-5" id="auctionAdmin">
         <div className="p-2 mt-3 text-center w-100">
-            <div className="d-flex justify-content-between">
-                <h3 className="mt-0">Auctions</h3>                
-            </div>   
+            <div className="d-flex justify-content-between"><h3 className="mt-0">Auction Management</h3></div>   
             <div id="addAuction" className="showForm m-3">
                 <h4 className="text-start">Add Auction</h4>
                 <form className="form-inline" onSubmit = {handleSubmit}>
@@ -96,16 +91,14 @@ const Auctions = (props) => {
                     <tr>
                         <th className="w-75">
                             <div className="row d-flex">
-                                <div className="col-6 text-start">
-                                    Auction Title
-                                </div>
+                                <div className="col-6 text-start">Auction Title</div>
                                 <div className="col-2 text-start">Starts</div>
                                 <div className="col-2 text-start">Ends</div>
                                 <div className="col-2"></div>
                             </div>
                         </th>                       
-                        <th></th>
-                        <th></th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -114,15 +107,9 @@ const Auctions = (props) => {
                     <tr key={index}> 
                         <td className="text-start">                        
                             <div className="row d-flex pt-2" id={`auction${index}`}>
-                                <div className="col-6">
-                                    {auction.title} 
-                                </div>
-                                <div className="col-2">
-                                    {UsFormatter.format(parseISO(auction.startDate),'dd/mm/yyyy')}
-                                </div>
-                                <div className="col-2">
-                                    {UsFormatter.format(parseISO(auction.endDate), 'dd/mm/yyyy')}
-                                </div>
+                                <div className="col-6">{auction.title}</div>
+                                <div className="col-2">{UsFormatter.format(parseISO(auction.startDate),'dd/mm/yyyy')}</div>
+                                <div className="col-2">{UsFormatter.format(parseISO(auction.endDate), 'dd/mm/yyyy')}</div>
                                 <div className="col-2">                                                                
                                     <input type="button" className="w-100 btn btn-warning" value="Edit" src="" alt="Edit Items" onClick = {(event) => toggleEdit(index, 'edit')}/> 
                                 </div>                               

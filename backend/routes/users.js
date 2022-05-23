@@ -65,11 +65,22 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Get all users
+// GET all users
 router.get("/", [auth], async (req, res) => {
   try {
     console.log(req.user);
     const users = await User.find();
+    return res.send(users);
+  } catch (ex) {
+    return res.status(500).send(`Internal Server Error: ${ex}`);
+  }
+});
+
+//GET one user
+router.get("/:userId", [auth], async (req, res) => {
+  try {
+    console.log(req.user);
+    const users = await User.findById(req.params.userId);
     return res.send(users);
   } catch (ex) {
     return res.status(500).send(`Internal Server Error: ${ex}`);

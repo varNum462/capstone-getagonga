@@ -22,15 +22,20 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="w-30 text-end d-flex justify-content-end">
-          <div className="btn-right">
-            {user ? (
-              <button className="btn" onClick={logoutUser}>Logout</button>
-            ) : null
-            }
+          <div className="btn-right d-flex">
             {loggedIn && user.isAdmin ? (
-              <button className="btn mx-3" onClick={() => navigate("/admin")}>Admin</button>
+              <div>
+                <button className="btn mx-3" onClick={() => navigate("/admin")}>Admin</button>
+                <button className="btn mx-3" onClick={() => navigate("/")}>Home</button>
+              </div>
               ):null
             }
+            {user ? (
+              <div>
+                <button className="btn" onClick={logoutUser}>Logout</button>
+              </div>
+            ) : null
+            }            
           </div>          
         </li>
       </ul>

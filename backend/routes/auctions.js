@@ -55,6 +55,26 @@ router.put("/:auctionId/items", async (req, res) => {
   }
 });
 
+router.put("/:auctionId/items/:itemId", async (req, res) => {
+  try {       
+      let auction = await Auction.findById(req.params.auctionId);
+      let item = await auction.items.id(req.params.itemId,{itemName:req.body.itemName,category:req.body.category,retailPrice:req.body.retailPrice,startBid:req.body.startBid});
+      
+      if (!auction) return res.
+          status(400)
+          .send(`Auction does not exist!`)
+
+      if (!item) return res.
+      status(400)
+      .send(`Item does not exist!`)      
+
+      item.save();      
+      return res.status(200).send(item); 
+  } catch (error) {
+      return res.status(500).send(`Internal Server Error: ${error}`);
+  }
+});
+
 router.put("/:auctionId/items/:itemId/bids", async (req, res) => {
   try {       
       let auction = await Auction.findById(req.params.auctionId);

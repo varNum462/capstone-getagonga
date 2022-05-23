@@ -13,6 +13,11 @@ const AdminPage = () => {
     const [auctionId,setAuctionId] = useState();
     const [auctionName,setAuctionName] = useState();
     const [itemList, setItemList] = useState([{}]);
+
+    function showAuction(){
+      setItemsToggle(false);
+      setAuctionsToggle(true);
+    }
    
     async function ItemFinder(aucId,aucName){        
         setItemsToggle(true);
@@ -29,12 +34,12 @@ const AdminPage = () => {
 
   return (
     <div className="container">
-        <h2>Admin Console</h2>  
+        <h2 className="text-start border-bottom m-0 p-0">Admin Console</h2>  
           
         {
             auctionsToggle && <Auctions ItemFinder={ ItemFinder } />}
         {
-            itemsToggle && <Items itemList={ itemList } aucId = {auctionId} aucName = {auctionName} />      
+            itemsToggle && <Items itemList={ itemList } aucId = {auctionId} aucName = {auctionName}  showAuction={showAuction} />      
         }
         
     </div>
