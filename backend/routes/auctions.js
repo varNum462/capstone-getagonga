@@ -91,6 +91,19 @@ router.get("/:auctionId/items/:itemId/bids", async (req, res) => {
 }
 });
 
+router.get("/:auctionId/items/:itemId/bids/:bidId", async (req, res) => {
+  try {       
+    const auction = await Auction.findById(req.params.auctionId);
+    const item = await auction.items.id(req.params.itemId);
+    const bids = await item.bids.id(req.params.bidId);
+    const bid = await bids;
+    
+    return res.send(bid);       
+} catch (error) {
+    return res.status(500).send(`Internal Server Error: ${error}`);
+}
+});
+
 //* PUT Edit auction
 router.put("/:auctionId", async (req, res) => {
     try {

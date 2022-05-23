@@ -3,7 +3,8 @@ import "./Footer.css";
 const Footer = () => {
   return (
     <footer>
-      <p>Copyright © 2022</p>{" "}
+    <div className="topedge"></div>
+      <p className="m-2">Copyright © 2022</p>{" "}
     </footer>
   );
 };

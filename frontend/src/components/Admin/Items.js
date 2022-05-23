@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ItemSearch from "./ItemSearch";
+import './Admin.css'
+import HighBid from "./HighBid";
 
 
 const Items = (props) => {
     const [searchTerm, setSearch] = useState([]); 
-    const [itemArray, setItemArray] = useState([{}]);
+    const [itemArray, setItemArray] = useState([]);
     const [noResults,setNoResults] = useState();
+    const [auctionItems,setAuctionItems] = useState([]);
+    
+
+    //NEW API KEY 3a6b58a128d85a0ecd2090689ca10e756fdb82e9218db06856e3300a527548a9
 
     const newItem = async () => {
-        console.log(searchTerm);
         let newItemSearch = await axios.get(`https://serpapi.com/search?q=${searchTerm}&engine=google&gl=us&api_key=16181e421d1e24adaa222ebaa1144735b56e2dda0a719e456e3bd1571109dd2f`)
         if(newItemSearch.data.shopping_results !== null){
         setItemArray(newItemSearch.data.shopping_results);
@@ -17,30 +22,17 @@ const Items = (props) => {
         setNoResults("No Results");    
             }
         console.log(newItemSearch.data.shopping_results);
-        }
-    
-        //const [title, setTitle] = useState("no-title")
-        //const [image, setImage] = useState("no-image")
-        //const [price, setPrice] = useState(0.00)
-        //const [startBid, setStartBid] = useState(0.00)
-        //const [link, setLink] = useState("no-link")
-        //const [category, setCategory] = useState("no-category")
+        }    
+       
         
         function addItem (event) {
-        event.preventDefault();       
-        //setTitle(event.target.title.value);    
-            console.log(`title ${ event.target.title.value }`);   
-        //setImage(event.target.image.value);
+        event.preventDefault(); 
+            console.log(`title ${ event.target.title.value }`);
             console.log(`image ${event.target.image.value}`);
-        //setPrice(event.target.retailPrice.value);
-            console.log(`price ${event.target.retailPrice.value}`);
-        //setStartBid(event.target.startBid.value);
+            console.log(`price ${event.target.retail.value}`);
             console.log(`start bid ${event.target.startBid.value}`);
-       // setLink(event.target.link.value);
             console.log(`link ${event.target.link.value}`);
-       // setCategory(event.target.category.value);
             console.log(`category ${event.target.category.value}`);
-        //console.log(`title ${title} - price ${price} - ${startBid} - ${link} - ${category} `);
         
         let newAuctionItem = axios.put(`http://localhost:3008/api/auctions/${props.aucId}/items`, { 
             "itemName": event.target.title.value,
@@ -50,29 +42,32 @@ const Items = (props) => {
             "link": event.target.link.value,
             "category": event.target.category.value,
         })        
-        }
-    
-    //async function handleDelete(itemId) {
-    //    await axios.delete(`http://localhost:3008/api/auctions/${props.aucId}/items/${itemId}`);        
-    //}
-
+        }   
+        
+        async function getItems() {
+            let response = await axios.get(`http://localhost:3008/api/auctions/${props.aucId}/items`);    
+            setAuctionItems(response.data.items);    
+         } 
+        
     useEffect(() => {
         newItem(); 
       },[searchTerm])
-
+    
+      useEffect(() => {
+        getItems(); 
+      },[])
+     
   return (
-    <div className="container itemAdmin" id="itemAdmin">
+    <div className="container itemAdmin mb-5 pb-5" id="itemAdmin">
         <div className="p-2 mt-3 text-center w-100">
             <h3 className="mt-0">{props.aucName}</h3>  
-            <div id="addAuctionItem" className="showForm m-3">
-                <h4 className="text-start">Add Item</h4>
-                <ItemSearch  setSearch = {setSearch}/>
-            </div> 
+            <ItemSearch  setSearch = {setSearch}/>            
             <h4>Search Results</h4>
             <div className="d-flex justify-content-between">
             {itemArray && itemArray.map((item,index) => {
                 if(index < 5){
-                let firstBid = parseFloat(Math.round((item.extracted_price / 3) / 5) * 5).toFixed(2);  
+                let firstBid = parseFloat(Math.round((item.extracted_price / 3) / 5) * 5).toFixed(2); 
+                if (item.title !== null && item.title !== "")
                 return (    
                     <div className="w-25 m-3 text-start card" key={index}> 
                         <div className="d-flex align-items-stretch card-header">
@@ -124,31 +119,33 @@ const Items = (props) => {
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Item Name</th>
-                        <th>Description</th>
+                        <th></th>
+                        <th className="w-25">Item Name/Description</th>                       
                         <th>Category</th>
                         <th>Retail</th>
                         <th>Start Bid</th>
-                        <th>Winning Bid</th>
+                        <th>High Bid/Bidder</th>
                         <th>Total Bids</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>               
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                {auctionItems && auctionItems.map((item,index) => {                                 
+                    return(
+                    <tr key={index}>
+                        <td><img src={item.image} alt={item.itemName} width="100" /></td>
+                        <td className="text-start">{item.itemName}<br /><p><a href={item.link} target="_blank" rel="noreferrer">For more information, click here</a></p></td>
+                        <td>{item.category}</td>      
+                        <td>{item.retailPrice}</td>
+                        <td>{item.startBid}</td>
+                        <td><HighBid itemId={item._id} aucId={props.aucId} /></td>
+                        <td>{item.bids.length}</td>
+                        <td><button className="btn btn-success">Edit</button></td>
+                        <td><button className="btn btn-danger">Delete</button></td>
                     </tr>
+                )}
+                  )}
                 </tbody>
             </table>   
         </div>

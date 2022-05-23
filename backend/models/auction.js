@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const bidSchema = mongoose.Schema({
-  bidAmt: { type: Number },
+  bidAmt: { type: Number, default: 0 },
   bidderId: { type: String},
   bidDate: {type:Date, default: Date.now()},
 });

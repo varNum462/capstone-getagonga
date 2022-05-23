@@ -9,11 +9,10 @@ li {
 }
 
 .navBar {
-  background-image: linear-gradient(rgb(40, 40, 100),rgb(84, 59, 87));
-  box-shadow: 4px 2px 5px gray;
-  color: white;
+  background: rgb(255, 255, 255);
+  box-shadow: 4px 2px 5px gray;  
   margin-bottom: 2rem;
-  padding: 1.5rem 2rem;
+  padding: .5rem 2rem;
 }
 
 .btn-right{
@@ -23,7 +22,7 @@ li {
 
 .navBar button {
   background: rgb(155, 11, 155);
-  border: 2px solid white;
+  border: 2px solid rgb(248, 4, 195);
   color: white;
   padding: 0.4rem 0.5rem;
 }
@@ -52,5 +51,14 @@ li {
 
 .brand {
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 2.25rem;
+  text-shadow: 0 2px 8px rgb(145, 141, 141) ;
+}
+
+.navBar a{
+  color: rgb(160, 54, 221) !important;
+}
+
+.navBar a:hover{
+  color: rgb(238, 32, 193) !important;
 }

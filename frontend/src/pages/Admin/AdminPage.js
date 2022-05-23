@@ -12,7 +12,7 @@ const AdminPage = () => {
     const [auctionsToggle,setAuctionsToggle] = useState(true);
     const [auctionId,setAuctionId] = useState();
     const [auctionName,setAuctionName] = useState();
-    const [itemList, setItemList] = useState([]);
+    const [itemList, setItemList] = useState([{}]);
    
     async function ItemFinder(aucId,aucName){        
         setItemsToggle(true);

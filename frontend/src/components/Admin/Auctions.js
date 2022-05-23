@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 //import { useNavigate } from "react-router-dom";
-import { parseISO } from 'date-fns';
-
-const UsFormatter = new Intl.DateTimeFormat('en-US')
+import { parseISO } from "date-fns";
+const UsFormatter = new Intl.DateTimeFormat("en-US")
 
 const Auctions = (props) => {   
     const [auctionList, setAuctionList] = useState([]);
@@ -68,7 +67,7 @@ const Auctions = (props) => {
     }    
     
   return (
-    <div className="container auctionAdmin" id="auctionAdmin">
+    <div className="container auctionAdmin mb-5" id="auctionAdmin">
         <div className="p-2 mt-3 text-center w-100">
             <div className="d-flex justify-content-between">
                 <h3 className="mt-0">Auctions</h3>                

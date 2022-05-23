@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
+import '../LoginPage/LoginPage.css'
 
 const RegisterPage = () => {
   const { registerUser } = useContext(AuthContext);
@@ -12,51 +13,25 @@ const RegisterPage = () => {
 
   return (
     <div className="container">
-      <form className="form" onSubmit={handleSubmit}>
-        <label>
-          Name:{" "}
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          Email:{" "}
-          <input
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          Password:{" "}
-          <input
-            type="text"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label
-          style={{
-            display: "flex",
-            alignItems: "center",
-            width: "20%",
-          }}
-        >
-          Admin:{" "}
-          <input
-            type="checkbox"
-            name="isAdmin"
-            checked={formData.isAdmin}
-            onChange={handleInputChange}
-          />
-        </label>
-        <button>Register!</button>
-      </form>
+      <h2>To view auctions and place bids on items, please register for an account.</h2>
+      <h3>All fields are required.</h3>
+      <div className="w-35 mx-auto mt-5">
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="input-group input-group-lg">
+            <span className="input-group-text">Name:{" "}</span>
+            <input type="text" className="form-control form-control-lg m-0" name="name" value={formData.name} onChange={handleInputChange} />
+          </div>
+          <div className="input-group input-group-lg">
+            <span className="input-group-text">Email:{" "}</span>
+            <input type="text" className="form-control form-control-lg m-0" name="email" value={formData.email} onChange={handleInputChange} />
+          </div>
+          <div className="input-group input-group-lg">
+            <span className="input-group-text">Password:{" "}</span>
+            <input type="text" className="form-control form-control-lg m-0" name="password" value={formData.password} onChange={handleInputChange} />
+          </div>
+          <button className="btn btn-primary">Register!</button>
+        </form>
+      </div>
     </div>
   );
 };

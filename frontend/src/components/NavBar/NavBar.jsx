@@ -15,24 +15,21 @@ const Navbar = () => {
   
   return (
     <div className="navBar">
-      <ul>
+      <ul className="m-0">
         <li className="brand">
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             <b>GetAGonga Auctions</b>
           </Link>
         </li>
-        <li className="w-50 text-end">
+        <li className="w-30 text-end d-flex justify-content-end">
           <div className="btn-right">
             {user ? (
               <button className="btn" onClick={logoutUser}>Logout</button>
-            ) : (
-              <button className="btn" onClick={() => navigate("/login")}>Login</button>            
-            )}
+            ) : null
+            }
             {loggedIn && user.isAdmin ? (
-              <button className="btn" onClick={() => navigate("/admin")}>Admin</button>
-              ):(
-              <button className="btn" onClick={() => navigate("/")}>Auction</button>  
-              )
+              <button className="btn mx-3" onClick={() => navigate("/admin")}>Admin</button>
+              ):null
             }
           </div>          
         </li>
